@@ -1,0 +1,6 @@
+project/
+venv/
+.vscode
+target/
+input/
+output/

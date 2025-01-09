@@ -58,6 +58,7 @@ class InNetworkFile:
 def processStateInNetworkFiles(data, state: States):
   """Function to process the input data stream from the index file."""
   cnt = 0
+  uniq = set()
   for r in data["reporting_structure"]:
     try:
       # This key is not required and thus must be checked.
@@ -76,10 +77,15 @@ def processStateInNetworkFiles(data, state: States):
       if not f.stateFilter(state):
         continue
 
+      url = urlparse(f.location)
+      if f.location in uniq:
+        continue
+    
       cnt += 1
-      if cnt % 10000 == 0:
+      if cnt % 10 == 0:
         print(str(cnt) + " Files Found.")
 
+      uniq.add(f.location)
       yield f.location
 
 def main():
@@ -87,7 +93,7 @@ def main():
   index_file = pathlib.Path(sys.argv[1])
   state = States.NEW_YORK
 
-  #strt = time()
+  strt = time()
   if file_exists(index_file):
     with open(index_file, "r") as idxFile:
       with open("output/" + state.name + '.json', 'w', encoding='utf-8') as outFile:
@@ -95,9 +101,9 @@ def main():
         d = processStateInNetworkFiles(data, state)
         json.dump(d, outFile, indent=2)
   
-  #end = time()
-  #elapsed = end - strt
-  #print("Elapsed: " + elapsed / 60 + " Mintures")
+  end = time()
+  elapsed = end - strt
+  print("Elapsed: " + str(elapsed / 60) + " Mintues")
       
 if __name__ == '__main__':
   main()

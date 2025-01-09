@@ -9,7 +9,6 @@ WORKDIR /usr/app
 
 RUN pip install --upgrade pip && pip install -r requirements.txt
 RUN mkdir /usr/app/output
-#RUN mkdir /usr/app/input
 
 ADD https://antm-pt-prod-dataz-nogbd-nophi-us-east1.s3.amazonaws.com/anthem/2025-01-01_anthem_index.json.gz /usr/app/input/
 RUN gzip -d /usr/app/input/2025-01-01_anthem_index.json.gz

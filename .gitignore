@@ -4,3 +4,5 @@ venv/
 target/
 input/
 output/
+Dockerfile
+min_index_file.json.gz

@@ -77,7 +77,6 @@ def processStateInNetworkFiles(data, state: States):
       if not f.stateFilter(state):
         continue
 
-      url = urlparse(f.location)
       if f.location in uniq:
         continue
     
@@ -96,7 +95,7 @@ def main():
   strt = time()
   if file_exists(index_file):
     with open(index_file, "r") as idxFile:
-      with open("output/" + state.name + '.json', 'w', encoding='utf-8') as outFile:
+      with open(state.name + '.json', 'w', encoding='utf-8') as outFile:
         data = json_stream.load(idxFile)
         d = processStateInNetworkFiles(data, state)
         json.dump(d, outFile, indent=2)
